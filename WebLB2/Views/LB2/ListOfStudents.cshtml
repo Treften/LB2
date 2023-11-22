@@ -1,0 +1,29 @@
+﻿
+@model List<LB2.Models.Студенты>
+@{ 
+    ViewBag.Title = "ListOfStudents";
+}
+<h2>Отсортированный список участников опроса (таблица)</h2>
+@Html.ActionLink("Добавить студента","CreateStudent", "LB2", new { @class = "btn btn-default"})
+
+<div class="row">
+    <div class="col-md-4"><strong>Наименование</strong></div>
+    <div class="col-md-2"><strong>Возраст</strong></div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="col-md-2"><strong>#</strong></div>
+        if (User.IsInRole("Admin"))
+        {
+            <div class="col-md-2"><strong>#</strong></div>
+            <div class="col-md-2"><strong>#</strong></div>
+        }
+    }
+
+
+</div>
+        @foreach (var student in Model)
+        {
+       
+            @Html.Partial("StudentOverviewPartial",student)
+        }
+ 

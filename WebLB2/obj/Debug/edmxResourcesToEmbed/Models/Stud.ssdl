@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="I11_MamontovVVModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Группы">
+    <Key>
+      <PropertyRef Name="ID группы" />
+    </Key>
+    <Property Name="ID группы" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ID института" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Наименование" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Год поступления" Type="int" Nullable="false" />
+    <Property Name="Длительность обучения" Type="int" Nullable="false" />
+    <Property Name="Код формы обучения" Type="int" Nullable="false" />
+    <Property Name="Код направления подготовки" Type="char" MaxLength="8" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Студенты">
+    <Key>
+      <PropertyRef Name="ID студентв" />
+    </Key>
+    <Property Name="ID студентв" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Фамилия" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Имя" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Отчество" Type="nvarchar" MaxLength="50" />
+    <Property Name="Пол" Type="bit" Nullable="false" />
+    <Property Name="Адрес проживания" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Дата рождения" Type="date" Nullable="false" />
+    <Property Name="Уровень владения ИЯ" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Студенты в группах">
+    <Key>
+      <PropertyRef Name="ID студента" />
+      <PropertyRef Name="ID группы" />
+    </Key>
+    <Property Name="ID студента" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ID группы" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Код формы оплаты" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Студенты в группах_Группы">
+    <End Role="Группы" Type="Self.Группы" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Студенты в группах" Type="Self.Студенты в группах" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Группы">
+        <PropertyRef Name="ID группы" />
+      </Principal>
+      <Dependent Role="Студенты в группах">
+        <PropertyRef Name="ID группы" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Студенты в группах_Студенты">
+    <End Role="Студенты" Type="Self.Студенты" Multiplicity="1" />
+    <End Role="Студенты в группах" Type="Self.Студенты в группах" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Студенты">
+        <PropertyRef Name="ID студентв" />
+      </Principal>
+      <Dependent Role="Студенты в группах">
+        <PropertyRef Name="ID студента" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="I11_MamontovVVModelStoreContainer">
+    <EntitySet Name="Группы" EntityType="Self.Группы" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Студенты" EntityType="Self.Студенты" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Студенты в группах" EntityType="Self.Студенты в группах" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Студенты в группах_Группы" Association="Self.FK_Студенты в группах_Группы">
+      <End Role="Группы" EntitySet="Группы" />
+      <End Role="Студенты в группах" EntitySet="Студенты в группах" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Студенты в группах_Студенты" Association="Self.FK_Студенты в группах_Студенты">
+      <End Role="Студенты" EntitySet="Студенты" />
+      <End Role="Студенты в группах" EntitySet="Студенты в группах" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

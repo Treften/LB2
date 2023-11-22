@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="I11_Mamontov" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Группы">
+    <Key>
+      <PropertyRef Name="ID_группы" />
+    </Key>
+    <Property Name="ID_группы" Type="Guid" Nullable="false" />
+    <Property Name="ID_института" Type="Guid" Nullable="false" />
+    <Property Name="Наименование" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Год_поступления" Type="Int32" Nullable="false" />
+    <Property Name="Длительность_обучения" Type="Int32" Nullable="false" />
+    <Property Name="Код_формы_обучения" Type="Int32" Nullable="false" />
+    <Property Name="Код_направления_подготовки" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Студенты_в_группах" Relationship="Self.FK_Студенты_в_группах_Группы" FromRole="Группы" ToRole="Студенты_в_группах" />
+  </EntityType>
+  <EntityType Name="Студенты">
+    <Key>
+      <PropertyRef Name="ID_студента" />
+    </Key>
+    <Property Name="ID_студента" Type="Guid" Nullable="false" />
+    <Property Name="Фамилия" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Имя" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Отчество" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Пол" Type="Boolean" Nullable="false" />
+    <Property Name="Адрес_проживания" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Дата_рождения" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Уровень_владения_ИЯ" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Студенты_в_группах" Relationship="Self.FK_Студенты_в_группах_Студенты" FromRole="Студенты" ToRole="Студенты_в_группах" />
+  </EntityType>
+  <EntityType Name="Студенты_в_группах">
+    <Key>
+      <PropertyRef Name="ID_студента" />
+      <PropertyRef Name="ID_группы" />
+    </Key>
+    <Property Name="ID_студента" Type="Guid" Nullable="false" />
+    <Property Name="ID_группы" Type="Guid" Nullable="false" />
+    <Property Name="Код_формы_оплаты" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Группы" Relationship="Self.FK_Студенты_в_группах_Группы" FromRole="Студенты_в_группах" ToRole="Группы" />
+    <NavigationProperty Name="Студенты" Relationship="Self.FK_Студенты_в_группах_Студенты" FromRole="Студенты_в_группах" ToRole="Студенты" />
+  </EntityType>
+  <Association Name="FK_Студенты_в_группах_Группы">
+    <End Role="Группы" Type="Self.Группы" Multiplicity="1" />
+    <End Role="Студенты_в_группах" Type="Self.Студенты_в_группах" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Группы">
+        <PropertyRef Name="ID_группы" />
+      </Principal>
+      <Dependent Role="Студенты_в_группах">
+        <PropertyRef Name="ID_группы" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Студенты_в_группах_Студенты">
+    <End Role="Студенты" Type="Self.Студенты" Multiplicity="1" />
+    <End Role="Студенты_в_группах" Type="Self.Студенты_в_группах" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Студенты">
+        <PropertyRef Name="ID_студента" />
+      </Principal>
+      <Dependent Role="Студенты_в_группах">
+        <PropertyRef Name="ID_студента" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TestModel" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Группы" EntityType="Self.Группы" />
+    <EntitySet Name="Студенты" EntityType="Self.Студенты" />
+    <EntitySet Name="Студенты_в_группах" EntityType="Self.Студенты_в_группах" />
+    <AssociationSet Name="FK_Студенты_в_группах_Группы" Association="Self.FK_Студенты_в_группах_Группы">
+      <End Role="Группы" EntitySet="Группы" />
+      <End Role="Студенты_в_группах" EntitySet="Студенты_в_группах" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Студенты_в_группах_Студенты" Association="Self.FK_Студенты_в_группах_Студенты">
+      <End Role="Студенты" EntitySet="Студенты" />
+      <End Role="Студенты_в_группах" EntitySet="Студенты_в_группах" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

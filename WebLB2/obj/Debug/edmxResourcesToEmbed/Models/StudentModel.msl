@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="abcModelStoreContainer" CdmEntityContainer="VMamontovEntities">
+    <EntitySetMapping Name="Группы">
+      <EntityTypeMapping TypeName="abcModel.Группы">
+        <MappingFragment StoreEntitySet="Группы">
+          <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+          <ScalarProperty Name="ID_группы" ColumnName="ID группы" />
+          <ScalarProperty Name="Год_поступления" ColumnName="Год поступления" />
+          <ScalarProperty Name="Длительность_обучения" ColumnName="Длительность обучения" />
+          <ScalarProperty Name="Код_формы_обучения" ColumnName="Код формы обучения" />
+          <ScalarProperty Name="Код_направления_подготовки" ColumnName="Код направления подготовки" />
+          <ScalarProperty Name="ID_института" ColumnName="ID института" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Студенты">
+      <EntityTypeMapping TypeName="abcModel.Студенты">
+        <MappingFragment StoreEntitySet="Студенты">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="InsertedDateTime" ColumnName="InsertedDateTime" />
+          <ScalarProperty Name="WakeUpTime" ColumnName="WakeUpTime" />
+          <ScalarProperty Name="GraduationDate" ColumnName="GraduationDate" />
+          <ScalarProperty Name="ID_студента" ColumnName="ID студента" />
+          <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+          <ScalarProperty Name="Имя" ColumnName="Имя" />
+          <ScalarProperty Name="Отчество" ColumnName="Отчество" />
+          <ScalarProperty Name="Пол" ColumnName="Пол" />
+          <ScalarProperty Name="Адрес_проживания" ColumnName="Адрес проживания" />
+          <ScalarProperty Name="Дата_рождения" ColumnName="Дата рождения" />
+          <ScalarProperty Name="Уровень_владения_ИЯ" ColumnName="Уровень владения ИЯ" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Студенты_в_группах">
+      <EntityTypeMapping TypeName="abcModel.Студенты_в_группах">
+        <MappingFragment StoreEntitySet="Студенты в группах">
+          <ScalarProperty Name="ID_студента" ColumnName="ID студента" />
+          <ScalarProperty Name="Код_формы_оплаты" ColumnName="Код формы оплаты" />
+          <ScalarProperty Name="ID_группы" ColumnName="ID группы" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Role">
+      <EntityTypeMapping TypeName="abcModel.Role">
+        <MappingFragment StoreEntitySet="Role">
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="RoleCode" ColumnName="RoleCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User">
+      <EntityTypeMapping TypeName="abcModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="UserRole" ColumnName="UserRole" />
+          <ScalarProperty Name="Salt" ColumnName="Salt" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

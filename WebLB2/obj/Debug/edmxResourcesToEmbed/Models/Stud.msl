@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="I11_MamontovVVModelStoreContainer" CdmEntityContainer="Entities2">
+    <EntitySetMapping Name="Группы">
+      <EntityTypeMapping TypeName="I11_MamontovVVModel.Группы">
+        <MappingFragment StoreEntitySet="Группы">
+          <ScalarProperty Name="ID_группы" ColumnName="ID группы" />
+          <ScalarProperty Name="ID_института" ColumnName="ID института" />
+          <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+          <ScalarProperty Name="Год_поступления" ColumnName="Год поступления" />
+          <ScalarProperty Name="Длительность_обучения" ColumnName="Длительность обучения" />
+          <ScalarProperty Name="Код_формы_обучения" ColumnName="Код формы обучения" />
+          <ScalarProperty Name="Код_направления_подготовки" ColumnName="Код направления подготовки" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Студенты">
+      <EntityTypeMapping TypeName="I11_MamontovVVModel.Студенты">
+        <MappingFragment StoreEntitySet="Студенты">
+          <ScalarProperty Name="ID_студентв" ColumnName="ID студентв" />
+          <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+          <ScalarProperty Name="Имя" ColumnName="Имя" />
+          <ScalarProperty Name="Отчество" ColumnName="Отчество" />
+          <ScalarProperty Name="Пол" ColumnName="Пол" />
+          <ScalarProperty Name="Адрес_проживания" ColumnName="Адрес проживания" />
+          <ScalarProperty Name="Дата_рождения" ColumnName="Дата рождения" />
+          <ScalarProperty Name="Уровень_владения_ИЯ" ColumnName="Уровень владения ИЯ" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Студенты_в_группах">
+      <EntityTypeMapping TypeName="I11_MamontovVVModel.Студенты_в_группах">
+        <MappingFragment StoreEntitySet="Студенты в группах">
+          <ScalarProperty Name="ID_студента" ColumnName="ID студента" />
+          <ScalarProperty Name="ID_группы" ColumnName="ID группы" />
+          <ScalarProperty Name="Код_формы_оплаты" ColumnName="Код формы оплаты" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

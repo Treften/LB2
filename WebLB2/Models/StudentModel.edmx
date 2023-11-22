@@ -1,0 +1,360 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="abcModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleCode" />
+          </Key>
+          <Property Name="RoleCode" Type="int" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PasswordHash" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Salt" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserRole" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Группы">
+          <Key>
+            <PropertyRef Name="ID группы" />
+          </Key>
+          <Property Name="ID группы" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Год поступления" Type="int" Nullable="false" />
+          <Property Name="Длительность обучения" Type="int" Nullable="false" />
+          <Property Name="Код формы обучения" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Код направления подготовки" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ID института" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Наименование" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Студенты">
+          <Key>
+            <PropertyRef Name="ID студента" />
+          </Key>
+          <Property Name="ID студента" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Фамилия" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Имя" Type="char" MaxLength="250" Nullable="false" />
+          <Property Name="Отчество" Type="varchar" MaxLength="30" />
+          <Property Name="Пол" Type="bit" Nullable="false" />
+          <Property Name="Адрес проживания" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Дата рождения" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Уровень владения ИЯ" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="GraduationDate" Type="datetime" />
+          <Property Name="WakeUpTime" Type="datetime" />
+          <Property Name="InsertedDateTime" Type="datetime" />
+          <Property Name="UserID" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="Студенты в группах">
+          <Key>
+            <PropertyRef Name="ID студента" />
+            <PropertyRef Name="ID группы" />
+          </Key>
+          <Property Name="ID студента" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Код формы оплаты" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ID группы" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleCode" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Студенты_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Студенты" Type="Self.Студенты" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Студенты">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="СГ-группы">
+          <End Role="Группы" Type="Self.Группы" Multiplicity="1" />
+          <End Role="Студенты в группах" Type="Self.Студенты в группах" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Группы">
+              <PropertyRef Name="ID группы" />
+            </Principal>
+            <Dependent Role="Студенты в группах">
+              <PropertyRef Name="ID группы" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="СГ-студенты">
+          <End Role="Студенты" Type="Self.Студенты" Multiplicity="1" />
+          <End Role="Студенты в группах" Type="Self.Студенты в группах" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Студенты">
+              <PropertyRef Name="ID студента" />
+            </Principal>
+            <Dependent Role="Студенты в группах">
+              <PropertyRef Name="ID студента" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="abcModelStoreContainer">
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Группы" EntityType="Self.Группы" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Студенты" EntityType="Self.Студенты" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Студенты в группах" EntityType="Self.Студенты в группах" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Студенты_User" Association="Self.FK_Студенты_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Студенты" EntitySet="Студенты" />
+          </AssociationSet>
+          <AssociationSet Name="СГ-группы" Association="Self.СГ-группы">
+            <End Role="Группы" EntitySet="Группы" />
+            <End Role="Студенты в группах" EntitySet="Студенты в группах" />
+          </AssociationSet>
+          <AssociationSet Name="СГ-студенты" Association="Self.СГ-студенты">
+            <End Role="Студенты" EntitySet="Студенты" />
+            <End Role="Студенты в группах" EntitySet="Студенты в группах" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="abcModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Группы">
+          <Key>
+            <PropertyRef Name="ID_группы" />
+          </Key>
+          <Property Name="ID_группы" Type="Guid" Nullable="false" />
+          <Property Name="Год_поступления" Type="Int32" Nullable="false" />
+          <Property Name="Длительность_обучения" Type="Int32" Nullable="false" />
+          <Property Name="Код_формы_обучения" Type="Guid" Nullable="false" />
+          <Property Name="Код_направления_подготовки" Type="Guid" Nullable="false" />
+          <Property Name="ID_института" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Студенты_в_группах" Relationship="Self.СГ_группы" FromRole="Группы" ToRole="Студенты_в_группах" />
+          <Property Name="Наименование" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Студенты">
+          <Key>
+            <PropertyRef Name="ID_студента" />
+          </Key>
+          <Property Name="ID_студента" Type="Guid" Nullable="false" />
+          <Property Name="Фамилия" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Имя" Type="String" MaxLength="250" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Отчество" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Пол" Type="Boolean" Nullable="false" />
+          <Property Name="Адрес_проживания" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Дата_рождения" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Уровень_владения_ИЯ" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Студенты_в_группах" Relationship="Self.СГ_студенты" FromRole="Студенты" ToRole="Студенты_в_группах" />
+          <Property Name="GraduationDate" Type="DateTime" Precision="3" />
+          <Property Name="WakeUpTime" Type="DateTime" Precision="3" />
+          <Property Name="InsertedDateTime" Type="DateTime" Precision="3" />
+          <Property Name="UserID" Type="Guid" />
+          <NavigationProperty Name="User" Relationship="abcModel.FK_Студенты_User" FromRole="Студенты" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Студенты_в_группах">
+          <Key>
+            <PropertyRef Name="ID_студента" />
+            <PropertyRef Name="ID_группы" />
+          </Key>
+          <Property Name="ID_студента" Type="Guid" Nullable="false" />
+          <Property Name="Код_формы_оплаты" Type="Guid" Nullable="false" />
+          <Property Name="ID_группы" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Группы" Relationship="Self.СГ_группы" FromRole="Студенты_в_группах" ToRole="Группы" />
+          <NavigationProperty Name="Студенты" Relationship="Self.СГ_студенты" FromRole="Студенты_в_группах" ToRole="Студенты" />
+        </EntityType>
+        <Association Name="СГ_группы">
+          <End Role="Группы" Type="Self.Группы" Multiplicity="1" />
+          <End Role="Студенты_в_группах" Type="Self.Студенты_в_группах" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Группы">
+              <PropertyRef Name="ID_группы" />
+            </Principal>
+            <Dependent Role="Студенты_в_группах">
+              <PropertyRef Name="ID_группы" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="СГ_студенты">
+          <End Role="Студенты" Type="Self.Студенты" Multiplicity="1" />
+          <End Role="Студенты_в_группах" Type="Self.Студенты_в_группах" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Студенты">
+              <PropertyRef Name="ID_студента" />
+            </Principal>
+            <Dependent Role="Студенты_в_группах">
+              <PropertyRef Name="ID_студента" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VMamontovEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Группы" EntityType="Self.Группы" />
+          <EntitySet Name="Студенты" EntityType="Self.Студенты" />
+          <EntitySet Name="Студенты_в_группах" EntityType="Self.Студенты_в_группах" />
+          <AssociationSet Name="СГ_группы" Association="Self.СГ_группы">
+            <End Role="Группы" EntitySet="Группы" />
+            <End Role="Студенты_в_группах" EntitySet="Студенты_в_группах" />
+          </AssociationSet>
+          <AssociationSet Name="СГ_студенты" Association="Self.СГ_студенты">
+            <End Role="Студенты" EntitySet="Студенты" />
+            <End Role="Студенты_в_группах" EntitySet="Студенты_в_группах" />
+          </AssociationSet>
+          <EntitySet Name="Role" EntityType="abcModel.Role" />
+          <EntitySet Name="User" EntityType="abcModel.User" />
+          <AssociationSet Name="FK_User_Role" Association="abcModel.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Студенты_User" Association="abcModel.FK_Студенты_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Студенты" EntitySet="Студенты" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleCode" />
+          </Key>
+          <Property Name="RoleCode" Type="Int32" Nullable="false" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="User" Relationship="abcModel.FK_User_Role" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PasswordHash" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Salt" Type="Guid" Nullable="false" />
+          <Property Name="UserRole" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="abcModel.FK_User_Role" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="Студенты" Relationship="abcModel.FK_Студенты_User" FromRole="User" ToRole="Студенты" />
+        </EntityType>
+        <Association Name="FK_User_Role">
+          <End Type="abcModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="abcModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleCode" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Студенты_User">
+          <End Type="abcModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="abcModel.Студенты" Role="Студенты" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Студенты">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="abcModelStoreContainer" CdmEntityContainer="VMamontovEntities">
+          <EntitySetMapping Name="Группы">
+            <EntityTypeMapping TypeName="abcModel.Группы">
+              <MappingFragment StoreEntitySet="Группы">
+                <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+                <ScalarProperty Name="ID_группы" ColumnName="ID группы" />
+                <ScalarProperty Name="Год_поступления" ColumnName="Год поступления" />
+                <ScalarProperty Name="Длительность_обучения" ColumnName="Длительность обучения" />
+                <ScalarProperty Name="Код_формы_обучения" ColumnName="Код формы обучения" />
+                <ScalarProperty Name="Код_направления_подготовки" ColumnName="Код направления подготовки" />
+                <ScalarProperty Name="ID_института" ColumnName="ID института" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Студенты">
+            <EntityTypeMapping TypeName="abcModel.Студенты">
+              <MappingFragment StoreEntitySet="Студенты">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="InsertedDateTime" ColumnName="InsertedDateTime" />
+                <ScalarProperty Name="WakeUpTime" ColumnName="WakeUpTime" />
+                <ScalarProperty Name="GraduationDate" ColumnName="GraduationDate" />
+                <ScalarProperty Name="ID_студента" ColumnName="ID студента" />
+                <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+                <ScalarProperty Name="Отчество" ColumnName="Отчество" />
+                <ScalarProperty Name="Пол" ColumnName="Пол" />
+                <ScalarProperty Name="Адрес_проживания" ColumnName="Адрес проживания" />
+                <ScalarProperty Name="Дата_рождения" ColumnName="Дата рождения" />
+                <ScalarProperty Name="Уровень_владения_ИЯ" ColumnName="Уровень владения ИЯ" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Студенты_в_группах">
+            <EntityTypeMapping TypeName="abcModel.Студенты_в_группах">
+              <MappingFragment StoreEntitySet="Студенты в группах">
+                <ScalarProperty Name="ID_студента" ColumnName="ID студента" />
+                <ScalarProperty Name="Код_формы_оплаты" ColumnName="Код формы оплаты" />
+                <ScalarProperty Name="ID_группы" ColumnName="ID группы" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="abcModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleCode" ColumnName="RoleCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="abcModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserRole" ColumnName="UserRole" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

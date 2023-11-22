@@ -1,0 +1,52 @@
+﻿@model LB2.Models.Студенты
+
+@{
+    ViewBag.Title = "StudentDetails";
+}
+
+<h2>Участник опроса</h2>
+<h4>Студенты</h4>
+<hr />
+<div>
+
+    <dl class="row">
+        <div class="col-md-1"> @Html.LabelFor(m => m.Фамилия)</div>
+        <div class="col-md-3"> @Html.DisplayFor(m => m.Фамилия)</div>
+    </dl>
+    <dl class="row">
+        <div class="col-md-1"> @Html.LabelFor(m => m.Имя)</div>
+        <div class="col-md-3"> @Html.DisplayFor(m => m.Имя)</div>
+    </dl>
+    <dl class="row">
+        <div class="col-md-1"> @Html.LabelFor(m => m.Отчество)</div>
+        <div class="col-md-3"> @Html.DisplayFor(m => m.Отчество)</div>
+    </dl>
+    <dl class="row">
+        <div class="col-md-1"> @Html.LabelFor(m => m.Дата_рождения)</div>
+        <div class="col-md-3"> @Html.DisplayFor(m => m.Дата_рождения)</div>
+    </dl>
+    <dl class="row">
+        <div class="col-md-2"> @Html.LabelFor(m => m.Адрес_проживания)</div>
+        <div class="col-md-10"> @Html.DisplayFor(m => m.Адрес_проживания)</div>
+    </dl>
+    <dl class="row">
+        <div class="col-md-1"> @Html.LabelFor(m => m.Пол)</div>
+        <div class="col-md-3"> @Html.DisplayFor(m => m.Пол)</div>
+    </dl>
+    <dl class="row">
+        <div class="col-md-1"> @Html.LabelFor(m => m.InsertedDateTime)</div>
+        <div class="col-md-3"> @Html.DisplayFor(m => m.InsertedDateTime)</div>
+    </dl>
+    <dl class="row">
+        <div class="col-md-1"> @Html.LabelFor(m => m.WakeUpTime)</div>
+        <div class="col-md-3"> @Html.DisplayFor(m => m.WakeUpTime)</div>
+    </dl>
+    <dl class="row">
+        <div class="col-md-1"> @Html.LabelFor(m => m.GraduationDate)</div>
+        <div class="col-md-3"> @Html.DisplayFor(m => m.GraduationDate)</div>
+    </dl>
+</div>
+
+    <p>
+        @Html.ActionLink("Назад", "ListOfStudents")
+    </p>

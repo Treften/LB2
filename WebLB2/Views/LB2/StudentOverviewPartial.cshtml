@@ -1,0 +1,16 @@
+﻿@model LB2.Models.Студенты
+<div class="row">
+    <div class="col-md-4"> @Model.Фамилия @Model.Имя @Model.Отчество
+   ( @Html.Action("GraduationDate",new { studentID=Model.ID_студента }))
+    </div>
+    <div class="col-md-2"> @Model.Дата_рождения </div>
+    @if (User.Identity.IsAuthenticated)
+    {
+    <div class="col-md-2"> @Html.ActionLink("Подробнее", "StudentDetails", "LB2", new { personId = Model.ID_студента }, null) </div>
+        if (User.IsInRole("Admin"))
+        {
+    <div class="col-md-2"> @Html.ActionLink("Редактировать", "EditStudent", "LB2", new { studentID = Model.ID_студента }, null) </div>
+    <div class="col-md-2"> @Html.ActionLink("Удалить", "DeleteStudent", "LB2", new { studentID = Model.ID_студента }, null) </div>
+        }
+    }
+</div>
